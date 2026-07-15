@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Innovation with Responsibility — RIC ICT Seminar 2026</title>
+  <meta name="description"
+    content="Rangsit University International College ICT Seminar 2026. Theme: Innovation with Responsibility — Shaping the Future of Technology. Thursday, July 30, 2026, 3:00–4:15 PM via Google Meet.">
+  <meta name="theme-color" content="#04070f">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var theme = saved || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%239be83c'/%3E%3Cstop offset='1' stop-color='%2321c1c9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2304060d'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='url(%23g)' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='7' fill='url(%23g)'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- backdrop layers -->
+  <canvas id="ambientScene" aria-hidden="true"></canvas>
+  <div class="noise-layer" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- shared skyline artwork -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <g id="skylineArt">
+        <g class="sky-back">
+          <rect x="0" y="120" width="60" height="100" /><rect x="70" y="90" width="45" height="130" />
+          <rect x="125" y="140" width="70" height="80" /><rect x="205" y="70" width="50" height="150" />
+          <rect x="265" y="110" width="60" height="110" /><rect x="335" y="60" width="40" height="160" />
+          <rect x="385" y="130" width="80" height="90" /><rect x="475" y="95" width="55" height="125" />
+          <rect x="540" y="150" width="65" height="70" /><rect x="615" y="80" width="45" height="140" />
+          <rect x="670" y="120" width="70" height="100" /><rect x="750" y="65" width="50" height="155" />
+          <rect x="810" y="135" width="60" height="85" /><rect x="880" y="100" width="45" height="120" />
+          <rect x="935" y="145" width="75" height="75" /><rect x="1020" y="85" width="50" height="135" />
+          <rect x="1080" y="125" width="60" height="95" /><rect x="1150" y="105" width="50" height="115" />
+        </g>
+        <g class="sky-front">
+          <rect x="20" y="160" width="55" height="60" /><rect x="95" y="130" width="40" height="90" />
+          <rect x="150" y="175" width="60" height="45" /><rect x="230" y="100" width="45" height="120" />
+          <rect x="290" y="150" width="55" height="70" /><rect x="360" y="120" width="35" height="100" />
+          <rect x="410" y="170" width="70" height="50" /><rect x="495" y="140" width="50" height="80" />
+          <rect x="560" y="180" width="60" height="40" /><rect x="635" y="110" width="40" height="110" />
+          <rect x="690" y="155" width="65" height="65" /><rect x="770" y="130" width="45" height="90" />
+          <rect x="830" y="175" width="55" height="45" /><rect x="900" y="145" width="40" height="75" />
+          <rect x="955" y="165" width="70" height="55" /><rect x="1040" y="120" width="45" height="100" />
+          <rect x="1100" y="165" width="55" height="55" /><rect x="1170" y="145" width="30" height="75" />
+        </g>
+        <g class="sky-turbines" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round">
+          <line x1="150" y1="220" x2="150" y2="42" />
+          <line x1="150" y1="46" x2="120" y2="20" /><line x1="150" y1="46" x2="181" y2="24" /><line x1="150" y1="46" x2="150" y2="82" />
+          <line x1="985" y1="220" x2="985" y2="58" />
+          <line x1="985" y1="62" x2="958" y2="36" /><line x1="985" y1="62" x2="1013" y2="39" /><line x1="985" y1="62" x2="985" y2="92" />
+        </g>
+        <g class="sky-solar">
+          <polygon points="1030,190 1200,190 1170,220 1000,220" />
+          <line x1="1057" y1="190" x2="1027" y2="220" /><line x1="1084" y1="190" x2="1054" y2="220" />
+          <line x1="1111" y1="190" x2="1081" y2="220" /><line x1="1138" y1="190" x2="1108" y2="220" />
+          <line x1="1165" y1="190" x2="1135" y2="220" />
+        </g>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-brand" aria-label="Seminar home">
+        <img src="images/rsu-logo.png" alt="Rangsit University International College" class="brand-logo" style="aspect-ratio:257/151">
+        <span class="brand-divider" aria-hidden="true"></span>
+        <span class="brand-text">RSU ICT Symposium <em>2026</em></span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#agenda" class="nav-link">Agenda</a>
+        <a href="#speaker" class="nav-link">Speaker</a>
+        <a href="#topics" class="nav-link">Topics</a>
+        <a href="#participate" class="nav-link">Participate</a>
+        <a href="#team" class="nav-link">Team</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme">
+          <svg id="iconMoon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <svg id="iconSun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+        </button>
+        <a href="https://forms.gle/QxfHNHkUkzP2Eec1A" target="_blank" rel="noopener noreferrer"
+          class="btn btn-sm btn-gradient link-registration btn-magnetic">Register</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <a href="#about">About</a>
+    <a href="#agenda">Agenda</a>
+    <a href="#speaker">Guest Speaker</a>
+    <a href="#topics">Student Topics</a>
+    <a href="#participate">Participate</a>
+    <a href="#team">Organizing Team</a>
+    <a href="https://forms.gle/QxfHNHkUkzP2Eec1A" target="_blank" rel="noopener noreferrer"
+      class="btn btn-gradient link-registration mobile-cta">Register Now</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <canvas id="heroScene" aria-hidden="true"></canvas>
+    <div class="aurora aurora-1" aria-hidden="true"></div>
+    <div class="aurora aurora-2" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <svg class="hero-skyline" viewBox="0 0 1200 220" preserveAspectRatio="none" aria-hidden="true">
+      <use href="#skylineArt" />
+    </svg>
+
+    <div class="container hero-content">
+      <div class="hero-eyebrow reveal">
+        <img src="images/ict-logo.png" alt="" class="eyebrow-logo" aria-hidden="true" style="aspect-ratio:297/160">
+        <span>Rangsit University International College &nbsp;·&nbsp; ICT401</span>
+      </div>
+
+      <h1 class="hero-title reveal" style="--reveal-delay:80ms">
+        Innovation with<br>
+        <span class="gradient-word">Responsibility</span>
+      </h1>
+
+      <p class="hero-subtitle reveal" style="--reveal-delay:160ms">
+        Shaping the future of technology — where computing performance meets ethical, sustainable engineering.
+        Join student researchers and an award-winning AI scholar for a live seminar on building tech we can be
+        proud of.
+      </p>
+
+      <div class="hero-ctas reveal" style="--reveal-delay:240ms">
+        <a href="https://forms.gle/QxfHNHkUkzP2Eec1A" target="_blank" rel="noopener noreferrer"
+          class="btn btn-gradient btn-lg link-registration btn-magnetic">
+          Register Now
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="https://meet.google.com/oij-ueed-xcs" target="_blank" rel="noopener noreferrer"
+          class="btn btn-glass btn-lg meet-link link-meet btn-magnetic" id="heroMeetBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.82v6.36a1 1 0 0 1-1.447.894L15 14" />
+            <rect x="1" y="6" width="15" height="12" rx="2" />
+          </svg>
+          Join on Google Meet
+        </a>
+      </div>
+
+      <div class="hero-meta-row reveal" style="--reveal-delay:320ms">
+        <div class="meta-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Thu, July 30, 2026
+        </div>
+        <div class="meta-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+          </svg>
+          3:00 – 4:15 PM (GMT+7)
+        </div>
+        <div class="meta-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.82v6.36a1 1 0 0 1-1.447.894L15 14" />
+            <rect x="1" y="6" width="15" height="12" rx="2" />
+          </svg>
+          Online · Google Meet
+        </div>
+        <div class="meta-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+          e-Certificate Included
+        </div>
+      </div>
+
+      <div class="bezel countdown-bezel reveal" style="--reveal-delay:400ms">
+        <div class="bezel-inner countdown-panel">
+          <span class="countdown-label">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            Countdown to Seminar
+          </span>
+          <div class="countdown-units">
+            <div class="cd-unit"><div class="reel-pair" id="cd-days"></div><span class="cd-unit-label">Days</span></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><div class="reel-pair" id="cd-hours"></div><span class="cd-unit-label">Hrs</span></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><div class="reel-pair" id="cd-mins"></div><span class="cd-unit-label">Min</span></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><div class="reel-pair" id="cd-secs"></div><span class="cd-unit-label">Sec</span></div>
+          </div>
+          <span class="sr-only" id="cd-sr" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <a href="#about" class="scroll-cue" aria-label="Scroll to content">
+        <span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Responsible AI</span><span class="dot">✦</span>
+      <span>Sustainable Computing</span><span class="dot">✦</span>
+      <span>Data Center Ethics</span><span class="dot">✦</span>
+      <span>Performance Engineering</span><span class="dot">✦</span>
+      <span>Environmental Accountability</span><span class="dot">✦</span>
+      <span>Responsible AI</span><span class="dot">✦</span>
+      <span>Sustainable Computing</span><span class="dot">✦</span>
+      <span>Data Center Ethics</span><span class="dot">✦</span>
+      <span>Performance Engineering</span><span class="dot">✦</span>
+      <span>Environmental Accountability</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="about-layout">
+        <div class="about-copy">
+          <div class="section-header reveal">
+            <h2>Where progress meets <span class="text-lime">principle</span></h2>
+          </div>
+          <p class="body-text reveal">The RIC ICT Seminar 2026 is an academic event hosted by students of Rangsit
+            University International College. Under the theme <strong>"Innovation with Responsibility: Shaping the
+              Future of Technology,"</strong> this seminar bridges the gap between rapid technological breakthroughs
+            and ethical engineering practices.</p>
+          <p class="body-text reveal">As software tools and computer hardware evolve, developers face increasingly
+            complex decisions. This seminar brings together academic scholars, industry experts, and student
+            researchers to analyze computing performance optimization and assess the environmental footprint of
+            emerging tech models.</p>
+          <p class="body-text reveal">A major highlight is the special guest speaker session featuring
+            <strong>Aye Khin Khin Hpone (Yolanda Lim)</strong>, a gold medallist RIC alumna and AI scholar, sharing
+            emerging research on responsible AI ecosystems and leading a live, interactive Q&amp;A.</p>
+
+          <div class="stat-row reveal">
+            <div class="stat-card sheen-card">
+              <span class="stat-num">75</span>
+              <span class="stat-label">Minute live session</span>
+            </div>
+            <div class="stat-card sheen-card">
+              <span class="stat-num">2</span>
+              <span class="stat-label">Original research topics</span>
+            </div>
+            <div class="stat-card sheen-card">
+              <span class="stat-num">1</span>
+              <span class="stat-label">Guest speaker</span>
+            </div>
+            <div class="stat-card sheen-card">
+              <span class="stat-num">20</span>
+              <span class="stat-label">Student organizers</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-visual reveal">
+          <div class="poster-orbit" aria-hidden="true"><span></span><span></span></div>
+          <div class="poster-frame sheen-card">
+            <button type="button" class="lightbox-trigger" aria-label="View full-size poster">
+              <img src="images/poster.jpg" alt="Official RIC ICT Seminar 2026 poster — Innovation with Responsibility" class="poster-img">
+              <span class="lightbox-hint">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                View full size
+              </span>
+            </button>
+            <div class="poster-glow" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENDA -->
+  <section id="agenda" class="section bg-surface">
+    <div class="container">
+      <div class="section-header center reveal">
+        <span class="overline">Event Program</span>
+        <h2>Seminar Agenda</h2>
+        <p class="lead">Thursday, July 30, 2026 &nbsp;·&nbsp; 3:00 – 4:15 PM (GMT+7) &nbsp;·&nbsp; Online via Google
+          Meet</p>
+      </div>
+
+      <div class="timeline-wrap">
+        <div class="timeline-progress" id="timelineProgress" aria-hidden="true"></div>
+        <ol class="timeline">
+        <li class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="timeline-time">15:00</span>
+          <div class="timeline-card">
+            <h4>Welcome and Opening</h4>
+            <p>Official welcome address and administrative briefing by organizing MCs.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="timeline-time">15:05</span>
+          <div class="timeline-card">
+            <h4>Introduction to Seminar</h4>
+            <p>Introduction to the theme and scope of performance optimization vs. responsibility.</p>
+          </div>
+        </li>
+        <li class="timeline-item timeline-featured">
+          <div class="timeline-dot"></div>
+          <span class="timeline-time">15:10</span>
+          <div class="timeline-card">
+            <h4>Guest Speaker Session</h4>
+            <p>Keynote address by <strong>Aye Khin Khin Hpone (Yolanda Lim)</strong> on emerging AI scholar research
+              and responsible systems.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="timeline-time">15:30</span>
+          <div class="timeline-card">
+            <h4>Panel Discussion</h4>
+            <p>Moderated roundtable debate on balancing compute engineering performance with ecological
+              constraints.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="timeline-time">15:35</span>
+          <div class="timeline-card">
+            <h4>Question and Answer</h4>
+            <p>Open floor live Q&amp;A session with attendees, student speakers, and Yolanda Lim.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="timeline-time">15:45</span>
+          <div class="timeline-card">
+            <h4>Topic 1 Presentation</h4>
+            <p>Student research on <em>Impact of Operating System and GPU on Gaming Experience Among RSU
+                International Students</em>.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="timeline-time">16:00</span>
+          <div class="timeline-card">
+            <h4>Topic 2 Presentation</h4>
+            <p>Student research on <em>The Level of Awareness of AI Data Centers' Environmental Impacts among RIC
+                Students</em>.</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="timeline-time">16:15</span>
+          <div class="timeline-card">
+            <h4>Conclusion</h4>
+            <p>Final summary remarks and unlock authorization of the participation evaluation form.</p>
+          </div>
+        </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUEST SPEAKER -->
+  <section id="speaker" class="section">
+    <div class="container">
+      <div class="section-header center reveal">
+        <h2>Special Guest Speaker</h2>
+      </div>
+
+      <div class="speaker-layout reveal">
+        <div class="speaker-card sheen-card">
+          <div class="speaker-avatar-ring">
+            <img src="images/speaker-yolanda.png" alt="Aye Khin Khin Hpone (Yolanda Lim)" class="speaker-avatar">
+          </div>
+          <h3>Aye Khin Khin Hpone <span>(Yolanda Lim)</span></h3>
+          <span class="speaker-badge">RIC ICT Alumna &nbsp;·&nbsp; Gold Medallist 2025</span>
+          <p class="speaker-academic">His Majesty the King's Scholar — Computer Science, Minor in Data Science
+            &amp; AI<br>Asian Institute of Technology (AIT) — Ongoing</p>
+          <a href="https://www.linkedin.com/in/yolanda-lim/" target="_blank" rel="noopener noreferrer"
+            class="text-link link-linkedin">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" />
+            </svg>
+            View LinkedIn Profile
+          </a>
+        </div>
+
+        <div class="speaker-reasons sheen-card">
+          <h3>Why should you join?</h3>
+          <div class="reason-list">
+            <div class="reason-row">
+              <span class="reason-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/><circle cx="12" cy="12" r="4"/></svg>
+              </span>
+              <p>Gain insights into emerging technologies and Artificial Intelligence.</p>
+            </div>
+            <div class="reason-row">
+              <span class="reason-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-4Z"/></svg>
+              </span>
+              <p>Discover why responsible innovation matters for the future of computing.</p>
+            </div>
+            <div class="reason-row">
+              <span class="reason-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+              </span>
+              <p>Learn directly from an accomplished ICT alumna and AI scholar.</p>
+            </div>
+            <div class="reason-row">
+              <span class="reason-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </span>
+              <p>Participate in a live, interactive Q&amp;A session with our guest speaker.</p>
+            </div>
+            <div class="reason-row">
+              <span class="reason-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M9 14 6.5 22l5.5-3 5.5 3L15 14"/></svg>
+              </span>
+              <p>Receive an e-Certificate of Participation <span>(attendance &amp; evaluation required)</span>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDENT RESEARCH TOPICS -->
+  <section id="topics" class="section bg-surface">
+    <div class="container">
+      <div class="section-header center reveal">
+        <h2>Student Research Topics</h2>
+        <p class="lead">Undergraduate researchers from Rangsit University International College present empirical
+          studies bridging compute engineering and environmental accountability.</p>
+      </div>
+
+      <div class="topics-grid">
+        <div class="topic-card sheen-card">
+          <div class="topic-head">
+            <img src="images/presenter-sai-thi-han-win.png" alt="Sai Thi Han Win" class="topic-avatar">
+            <div>
+              <span class="overline">Research Topic 1</span>
+              <span class="topic-presenter">Sai Thi Han Win</span>
+            </div>
+          </div>
+          <h3>Impact of Operating System and Graphical Processing Unit on Gaming Experience Among Rangsit
+            University International Students</h3>
+          <p class="body-text">This research examines the technical parameters influencing modern digital
+            recreation. Operating systems (Windows, macOS, Linux) are paired with dedicated GPU architectures to
+            assess their impact on gaming performance indices — framerates, thermal throttling, stability — and how
+            these factors shape the overall user experience among RSU's international student gamers.</p>
+          <div class="topic-tags">
+            <span class="tag">Operating Systems</span>
+            <span class="tag">GPU Architecture</span>
+            <span class="tag">Gaming Framerates</span>
+            <span class="tag">Quantitative Survey</span>
+          </div>
+        </div>
+
+        <div class="topic-card sheen-card">
+          <div class="topic-head">
+            <img src="images/presenter-phyo-wai-aung.png" alt="Phyo Wai Aung" class="topic-avatar">
+            <div>
+              <span class="overline">Research Topic 2</span>
+              <span class="topic-presenter">Phyo Wai Aung</span>
+            </div>
+          </div>
+          <h3>The Level of Awareness of AI Data Centers' Environmental Impacts among Rangsit International College
+            Students</h3>
+          <p class="body-text">While generative AI tools (ChatGPT, Claude, Gemini) provide instant software
+            solutions, they rely on massive hyper-scale data centers. This research investigates RIC students'
+            awareness of the hidden ecological costs of these AI computations — grid pressure, cooling water
+            consumption, and carbon emissions footprint.</p>
+          <div class="topic-tags">
+            <span class="tag">AI Data Centers</span>
+            <span class="tag">Carbon Footprint</span>
+            <span class="tag">Water Consumption</span>
+            <span class="tag">Environmental Awareness</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMS / PARTICIPATE -->
+  <section id="participate" class="section">
+    <div class="container">
+      <div class="section-header center reveal">
+        <h2>Registration &amp; Evaluation</h2>
+        <p class="lead">Scan the QR code to register for the seminar, or submit your evaluation after attending.</p>
+      </div>
+
+      <div class="forms-grid reveal">
+        <div class="form-card sheen-card">
+          <div class="form-card-head head-blue">
+            <div class="form-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+              </svg>
+            </div>
+            <div>
+              <h3>Registration Form</h3>
+              <p>Sign up to attend the seminar</p>
+            </div>
+          </div>
+          <div class="qr-block">
+            <button type="button" class="lightbox-trigger" aria-label="View larger registration QR code">
+              <img src="images/qr-register.png" alt="Registration form QR code" class="qr-img">
+            </button>
+          </div>
+          <div class="form-card-body">
+            <p class="body-text">Scan the QR code with your phone camera to open the registration form.
+              Registration is free for all students and guests.</p>
+            <a href="https://forms.gle/QxfHNHkUkzP2Eec1A" target="_blank" rel="noopener noreferrer"
+              class="link-btn-row link-registration">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+              Register via Link
+            </a>
+            <div class="form-meta">
+              <span>Deadline: Before July 30, 2026</span>
+              <span>Free to register</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card sheen-card" id="evalCard">
+          <div class="form-card-head head-lime">
+            <div class="form-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" />
+              </svg>
+            </div>
+            <div>
+              <h3>Evaluation Form</h3>
+              <p>Share your feedback after the event</p>
+            </div>
+          </div>
+          <div class="qr-block qr-locked-wrap" id="evalQrWrap">
+            <button type="button" class="lightbox-trigger" id="evalQrTrigger" aria-label="View larger evaluation QR code" disabled>
+              <img src="images/qr-evaluate.png" alt="Evaluation form QR code" class="qr-img qr-blurred" id="evalQrImg">
+            </button>
+            <div class="qr-lock-overlay" id="evalLockOverlay">
+              <div class="qr-lock-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+              </div>
+              <p class="qr-lock-text">Available after<br><strong>July 30, 2026</strong></p>
+            </div>
+          </div>
+          <div class="form-card-body">
+            <p class="body-text" id="evalDesc">This evaluation form will be unlocked after the seminar ends. Please
+              come back to share your feedback — it helps us improve future events.</p>
+            <a href="https://forms.gle/bVEUWzwk1G74oByp8" target="_blank" rel="noopener noreferrer"
+              class="link-btn-row link-evaluation" id="evalFormBtn" style="display:none">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+              Evaluate via Link
+            </a>
+            <div class="form-meta">
+              <span id="evalStatus">Unlocks after July 30, 2026, 4:15 PM</span>
+              <span>Takes 2–3 minutes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team" class="section bg-surface">
+    <div class="container">
+      <div class="section-header center reveal">
+        <h2>Meet the Team</h2>
+        <p class="lead">ICT401 &mdash; Faculty of Information Technology, Rangsit University</p>
+      </div>
+
+      <div class="team-groups">
+        <div class="team-group reveal open">
+          <button type="button" class="team-group-head" aria-expanded="true" aria-controls="team-body-1">
+            <span class="team-badge role-blue">Team 1</span>
+            <span class="team-name">Technical &amp; Platform Management</span>
+            <span class="team-count">4 members</span>
+            <svg class="team-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="team-group-body" id="team-body-1">
+            <div class="team-group-body-inner">
+              <div class="member-grid">
+                <div class="member-card sheen-card"><div class="member-avatar role-blue">YL</div>
+                  <span class="member-name">Yan Naing Lin</span><span class="member-id">ID 6708161</span>
+                  <p class="member-desc">Team Leader.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-blue">KR</div>
+                  <span class="member-name">Ki Ran</span><span class="member-id">ID 6708209</span>
+                  <p class="member-desc">Platform setup &amp; live stream integrations.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-blue">SH</div>
+                  <span class="member-name">Sai Thi Han Win</span><span class="member-id">ID 6708129</span>
+                  <p class="member-desc">Live stream technician.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-blue">PT</div>
+                  <span class="member-name">Paing Ye Yint Thu</span><span class="member-id">ID 6708491</span>
+                  <p class="member-desc">Platform stability &amp; system checks.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-group reveal">
+          <button type="button" class="team-group-head" aria-expanded="false" aria-controls="team-body-2">
+            <span class="team-badge role-green">Team 2</span>
+            <span class="team-name">Public Relations &amp; Sponsorship</span>
+            <span class="team-count">4 members</span>
+            <svg class="team-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="team-group-body" id="team-body-2">
+            <div class="team-group-body-inner">
+              <div class="member-grid">
+                <div class="member-card sheen-card"><div class="member-avatar role-green">NK</div>
+                  <span class="member-name">Nanda Ko</span><span class="member-id">ID 6704637</span>
+                  <p class="member-desc">PR strategist &amp; partner outreach.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-green">WL</div>
+                  <span class="member-name">Wenqing Lyu</span><span class="member-id">ID 6609468</span>
+                  <p class="member-desc">International student PR campaigns.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-green">KM</div>
+                  <span class="member-name">Kaung Myat Min</span><span class="member-id">ID 6709843</span>
+                  <p class="member-desc">Invitations &amp; partnership proposals.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-green">AK</div>
+                  <span class="member-name">Aung Kabar</span><span class="member-id">ID 6708217</span>
+                  <p class="member-desc">Promotional outreach &amp; engagement.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-group reveal">
+          <button type="button" class="team-group-head" aria-expanded="false" aria-controls="team-body-3">
+            <span class="team-badge role-purple">Team 3</span>
+            <span class="team-name">Publications, Content &amp; Creative</span>
+            <span class="team-count">4 members</span>
+            <svg class="team-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="team-group-body" id="team-body-3">
+            <div class="team-group-body-inner">
+              <div class="member-grid">
+                <div class="member-card sheen-card"><div class="member-avatar role-purple">MS</div>
+                  <span class="member-name">May Khine Soe</span><span class="member-id">ID 6508444</span>
+                  <p class="member-desc">Creative direction &amp; content editing.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-purple">SM</div>
+                  <span class="member-name">Su Thet Mon</span><span class="member-id">ID 6708205</span>
+                  <p class="member-desc">Poster designer &amp; visual layouts.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-purple">MA</div>
+                  <span class="member-name">May Phu Aung</span><span class="member-id">ID 6703136</span>
+                  <p class="member-desc">Academic summaries &amp; program guide.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-purple">TS</div>
+                  <span class="member-name">Thiri Htet San</span><span class="member-id">ID 6703379</span>
+                  <p class="member-desc">Visual content review &amp; branding.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-group reveal">
+          <button type="button" class="team-group-head" aria-expanded="false" aria-controls="team-body-4">
+            <span class="team-badge role-amber">Team 4</span>
+            <span class="team-name">Moderation, Engagement &amp; Registration</span>
+            <span class="team-count">4 members</span>
+            <svg class="team-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="team-group-body" id="team-body-4">
+            <div class="team-group-body-inner">
+              <div class="member-grid">
+                <div class="member-card sheen-card"><div class="member-avatar role-amber">KS</div>
+                  <span class="member-name">Kaung Sitt Thway</span><span class="member-id">ID 6708242</span>
+                  <p class="member-desc">Main moderator &amp; coordination lead.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-amber">SM</div>
+                  <span class="member-name">Shin Thant Maung</span><span class="member-id">ID 6610290</span>
+                  <p class="member-desc">Event hosting &amp; MCing support.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-amber">KS</div>
+                  <span class="member-name">Kyaw Nyan Saw</span><span class="member-id">ID 6610283</span>
+                  <p class="member-desc">Session timekeeping &amp; Q&amp;A moderation.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-amber">SP</div>
+                  <span class="member-name">Sitt Paing Ye Yint</span><span class="member-id">ID 6610323</span>
+                  <p class="member-desc">Attendee verification support.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-group reveal">
+          <button type="button" class="team-group-head" aria-expanded="false" aria-controls="team-body-5">
+            <span class="team-badge role-red">Team 5</span>
+            <span class="team-name">Documentation, Reporting &amp; Certification</span>
+            <span class="team-count">4 members</span>
+            <svg class="team-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="team-group-body" id="team-body-5">
+            <div class="team-group-body-inner">
+              <div class="member-grid">
+                <div class="member-card sheen-card"><div class="member-avatar role-red">PA</div>
+                  <span class="member-name">Pyae Sone Aung</span><span class="member-id">ID 6610343</span>
+                  <p class="member-desc">Proceedings writer &amp; certs designer.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-red">ZM</div>
+                  <span class="member-name">Zay Ni Myint Moe</span><span class="member-id">ID 6709587</span>
+                  <p class="member-desc">Feedback analyst &amp; certificate database.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-red">KS</div>
+                  <span class="member-name">Khant Sithu Maung</span><span class="member-id">ID 6610284</span>
+                  <p class="member-desc">Evaluation compliance &amp; cert delivery.</p></div>
+                <div class="member-card sheen-card"><div class="member-avatar role-red">DA</div>
+                  <span class="member-name">Dana Aung</span><span class="member-id">ID 6610269</span>
+                  <p class="member-desc">Documentation &amp; event reporting.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <svg class="footer-skyline" viewBox="0 0 1200 220" preserveAspectRatio="none" aria-hidden="true">
+      <use href="#skylineArt" />
+    </svg>
+    <div class="container">
+      <div class="footer-layout">
+        <div class="footer-brand">
+          <div class="footer-logos">
+            <img src="images/rsu-logo.png" alt="Rangsit University International College" class="footer-logo" style="aspect-ratio:257/151">
+            <img src="images/ict-logo.png" alt="ICT Department" class="footer-logo" style="aspect-ratio:297/160">
+          </div>
+          <p>Innovation with Responsibility: Shaping the Future of Technology. Organized by ICT401 Section 132
+            Team 1, Faculty of Information Technology, Rangsit University International College.</p>
+          <div class="footer-social-row">
+            <a href="https://www.facebook.com/ICTRangsitU" target="_blank" rel="noopener noreferrer"
+              class="footer-social-link link-facebook" aria-label="ICT Facebook">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+              Facebook
+            </a>
+            <a href="https://www.youtube.com/@RangsitUniversity" target="_blank" rel="noopener noreferrer"
+              class="footer-social-link link-youtube" aria-label="Rangsit YouTube">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" />
+                <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" />
+              </svg>
+              YouTube
+            </a>
+          </div>
+          <div class="footer-contact">Contact: <a href="mailto:saithihan.w67@rsu.ac.th" class="link-email">saithihan.w67@rsu.ac.th</a></div>
+        </div>
+        <div class="footer-links-grid">
+          <div class="footer-col">
+            <h5>Sections</h5>
+            <ul>
+              <li><a href="#about">About Seminar</a></li>
+              <li><a href="#agenda">Agenda</a></li>
+              <li><a href="#speaker">Guest Speaker</a></li>
+              <li><a href="#topics">Student Topics</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Event</h5>
+            <ul>
+              <li><a href="#participate">Register / Evaluate</a></li>
+              <li><a href="#team">Organizing Team</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>RIC Links</h5>
+            <ul>
+              <li><a href="https://www.rsuip.org" target="_blank" rel="noopener noreferrer">RIC Website</a></li>
+              <li><a href="https://www.facebook.com/rangsit.inter" target="_blank" rel="noopener noreferrer">RSU Facebook</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 RIC ICT Seminar — Rangsit University International College</p>
+        <p>Organized by ICT401 Section 132 Team 1</p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backToTop" aria-label="Back to top" title="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" />
+    </svg>
+  </button>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+    <div class="lightbox-content">
+      <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close image preview">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <img id="lightboxImg" src="" alt="">
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="hero-scene.js"></script>
+  <script src="ambient-scene.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
