@@ -1,1 +1,0 @@
-# RIC_ICT_Symposium
